@@ -3,8 +3,6 @@ import { serve } from '@hono/node-server';
 import { cors } from 'hono/cors';
 
 const datas = [
-    { uuid: '3E F4 5R 3D', team: 'blue', stand: '0', hit: '0' },
-    { uuid: '5F 4R 7J 6J', team: 'red', stand: '0', hit: '0' }
 ];
 
 const app = new Hono();
