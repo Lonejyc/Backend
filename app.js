@@ -17,6 +17,19 @@ app.get('/api/data', (c) => {
     return c.json(datas);
 });
 
+app.get('/api/data/:uuid', (c) => {
+    console.log('GET /api/data/:uuid');
+    const uuid = c.params.uuid;
+    const formattedUuid = uuid.match(/.{1,2}/g).join(' '); // Convert "a243zc5f" to "a2 43 zc 5f"
+    const data = datas.find(d => d.uuid === formattedUuid);
+
+    if (!data) {
+        return c.status(404).json({ error: 'Data not found' });
+    }
+
+    return c.json(data);
+});
+
 app.post('/api/data', async (c) => {
     console.log('POST /api/data');
     const data = await c.req.json();
