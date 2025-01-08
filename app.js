@@ -29,8 +29,8 @@ app.post('/api/data', async (c) => {
 
     if (existingData) {
         if (existingData.team === data.team && existingData.hit === data.hit && existingData.stand === data.stand) {
-            // Remove the data if it already exists with the same team, hit, and stand
-            datas.splice(datas.findIndex(d => d.uuid === data.uuid), 1);
+            // Do nothing if it already exists with the same team, hit, and stand
+            return c.json(datas);
         } else {
             // Update the data if any of the fields (team, hit, or stand) change
             existingData.team = data.team;
@@ -41,6 +41,20 @@ app.post('/api/data', async (c) => {
         // Add new data if the uuid does not exist
         datas.push(data);
     }
+
+    return c.json(datas);
+});
+
+app.delete('/api/data/:uuid', (c) => {
+    console.log('DELETE /api/data/:uuid');
+    const uuid = c.params.uuid;
+    const index = datas.findIndex(d => d.uuid === uuid);
+
+    if (index === -1) {
+        return c.status(404).json({ error: 'Data not found' });
+    }
+
+    datas.splice(index, 1);
 
     return c.json(datas);
 });
