@@ -48,7 +48,8 @@ app.post('/api/data', async (c) => {
 app.delete('/api/data/:uuid', (c) => {
     console.log('DELETE /api/data/:uuid');
     const uuid = c.params.uuid;
-    const index = datas.findIndex(d => d.uuid === uuid);
+    const formattedUuid = uuid.match(/.{1,2}/g).join(' '); // Convert "a243zc5f" to "a2 43 zc 5f"
+    const index = datas.findIndex(d => d.uuid === formattedUuid);
 
     if (index === -1) {
         return c.status(404).json({ error: 'Data not found' });
