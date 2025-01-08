@@ -19,7 +19,7 @@ app.get('/api/data', (c) => {
 
 app.get('/api/data/:uuid', (c) => {
     console.log('GET /api/data/:uuid');
-    const uuid = c.params.uuid;
+    const uuid = c.req.param('uuid');
     const data = datas.find(d => d.uuid === uuid);
 
     if (!data) {
@@ -59,7 +59,7 @@ app.post('/api/data', async (c) => {
 
 app.delete('/api/data/:uuid', (c) => {
     console.log('DELETE /api/data/:uuid');
-    const uuid = c.params.uuid;
+    const uuid = c.req.param('uuid');
     const index = datas.findIndex(d => d.uuid === uuid);
 
     if (index === -1) {
